@@ -61,7 +61,6 @@
 
 <main>
 	<div id="hoved">
-		<h1>Siri sier</h1>
 		<textarea
 			bind:this={tekstfelt}
 			bind:value={oppgave}
@@ -69,6 +68,7 @@
 			placeholder="Skriv oppgavetekst …"
 			aria-label="Oppgavetekst"
 		></textarea>
+		<h1>Siri sier</h1>
 		<button onclick={play} class={buttonClass}
 			>SUMM!</button
 		>
@@ -108,12 +108,13 @@
 		color: #fff;
 		font-family: 'Red Hat Display', Arial;
 		font-size: clamp(44pt, 8vw, 72pt);
-		margin-bottom: 0.2em;
+		margin: 0 0 0.2em;
 	}
 
+	/* Feltet er usynlig til man nærmer seg det — bare teksten skal synes */
 	textarea {
 		width: min(90vw, 800px);
-		margin-bottom: 0.6em;
+		margin-bottom: 0.4em;
 		padding: 8pt 12pt;
 		resize: none;
 		overflow: hidden;
@@ -123,23 +124,36 @@
 		font-weight: 800;
 		font-size: clamp(18pt, 3.5vw, 32pt);
 		line-height: 1.2;
-		background: rgba(0, 0, 0, 0.25);
-		backdrop-filter: blur(1px);
-		-webkit-backdrop-filter: blur(1px);
-		border: 2px dashed rgba(255, 255, 255, 0.35);
+		background: transparent;
+		border: 2px dashed transparent;
 		border-radius: 6px;
-		transition: border-color 0.15s ease-in-out;
+		transition:
+			border-color 0.15s ease-in-out,
+			background-color 0.15s ease-in-out;
 	}
 
 	textarea::placeholder {
-		color: rgba(255, 255, 255, 0.55);
+		color: transparent;
 		font-weight: 400;
+		transition: color 0.15s ease-in-out;
 	}
 
 	textarea:hover,
 	textarea:focus {
-		border-color: #ff4742;
+		background: rgba(0, 0, 0, 0.25);
+		backdrop-filter: blur(1px);
+		-webkit-backdrop-filter: blur(1px);
+		border-color: rgba(255, 255, 255, 0.5);
 		outline: 0;
+	}
+
+	textarea:focus {
+		border-color: #ff4742;
+	}
+
+	textarea:hover::placeholder,
+	textarea:focus::placeholder {
+		color: rgba(255, 255, 255, 0.55);
 	}
 
 	button.playing {
